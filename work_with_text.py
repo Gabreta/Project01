@@ -18,8 +18,6 @@ def is_user_registered():
                 return True
     return False
 
-print(is_user_registered())
-
 
 # hardcoded text
 TEXTS = ['''
@@ -115,11 +113,14 @@ def text_process(list_of_texts):
     print('Total words start with capital letter in selected paragraph is:', count_words_starts_lower(selected_paragraph))
 
 
-text_process(TEXTS2)
+def run_project(list_of_texts):
+    if is_user_registered():
+        text_process(list_of_texts)
+    else:
+        print('You are not registered.')
 
 
-
-
+run_project(TEXTS2)
 
 
 

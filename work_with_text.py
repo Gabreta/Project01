@@ -8,7 +8,7 @@ users = {'ann': '123',
          }
 
 
-# function to add and verify a new user in dictionary
+# function to verify an user in dictionary
 def is_user_registered():
     username = input('Enter Username:')
     password = input('Enter Password:')
@@ -50,8 +50,6 @@ in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
 
-TEXTS2 = ['A', 'Av G', 'A D K', 'Sgh7 S D Cvvv', 'Dfty7 F C Ssss F nNn']
-
 
 # function to repeat characters or symbols, use inside some other functions
 def repeat_char(char,num_repetitions):
@@ -71,7 +69,7 @@ def paragraphs_print(list_of_texts):
 
 
 def ask_user_for_input(list_length):
-    user_input = - 1  #
+    user_input = - 1  # -1 as helper
     while user_input == - 1:
         selection = input('Your selection: ')
         if selection.isnumeric():
@@ -91,27 +89,43 @@ def count_words(input_text):
 
 
 def count_words_start_upper(input_text):
-    upperst = sum(1 for w in input_text if w[0].isupper())
-    return upperst
+    start_upper = sum(1 for word in input_text.split() if word[0].isupper())
+    return start_upper
 
 
 def count_words_contain_upper(input_text):
-    upper = sum(1 for w in input_text if w.isupper())
+    upper = sum(1 for word in input_text if word.isupper())
     return upper
 
 
 def count_words_starts_lower(input_text):
-    lower = sum(1 for w in input_text if w[0].islower())
+    lower = sum(1 for word in input_text.split() if word[0].islower())
     return lower
+
+
+def count_string_numeric(input_text):
+    number = sum(1 for num in input_text.split() if num.isdigit())
+    return number
+
+
+def bar_chart_word_len_frequency(input_text):
+    container = []
+    text_split = input_text.split()
+    for index, word in enumerate(text_split):
+        word = word.strip('.,?!')
+        length = len(word)
+        container.append(length)
+        return container
 
 
 def text_process(list_of_texts):
     selected_paragraph = list_of_texts[ask_user_for_input(len(list_of_texts))]
     print('Total number of words in selected paragraph is:', count_words(selected_paragraph))
-    print('Total words start with capital letter in selected paragraph is:', count_words_start_upper(selected_paragraph))
-    print('Total words start with capital letter in selected paragraph is:', count_words_contain_upper(selected_paragraph))
-    print('Total words start with capital letter in selected paragraph is:', count_words_starts_lower(selected_paragraph))
-
+    print('Total words start with upper-case letter in selected paragraph is:', count_words_start_upper(selected_paragraph))
+    print('Total words contain upper-case letter in selected paragraph is:', count_words_contain_upper(selected_paragraph))
+    print('Total words start with lower-case letter in selected paragraph is:', count_words_starts_lower(selected_paragraph))
+    print('Total numeric strings in selected paragraph is:', count_string_numeric(selected_paragraph))
+    print('To jsem zvedava co to vytiskne', bar_chart_word_len_frequency(selected_paragraph))
 
 def run_project(list_of_texts):
     if is_user_registered():
@@ -120,7 +134,7 @@ def run_project(list_of_texts):
         print('You are not registered.')
 
 
-run_project(TEXTS2)
+run_project(TEXTS)
 
 
 

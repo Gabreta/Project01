@@ -1,4 +1,10 @@
-welcome = print('Welcome to the best app ever')
+# First this app verify whether user is registered.
+# Registered user can select between the hardcoded paragraphs 1 to 3.
+# The selected paragraph will be analysed by this app.
+
+
+welcome = print('\nWelcome to the Text analyser app!\nYou can select one of the three avalable texts.\nPlease login.\n')
+
 
 # hardcoded users in dictionary
 users = {'ann': '123',
@@ -19,7 +25,7 @@ def is_user_registered():
     return False
 
 
-# hardcoded text
+# hardcoded text which is used for text analysis
 TEXTS = ['''
 Situated about 10 miles west of Kemmerer, 
 Fossil Butte is a ruggedly impressive 
@@ -51,21 +57,8 @@ garpike and stingray are also present.'''
 ]
 
 
-# function to repeat characters or symbols, use inside some other functions
-def repeat_char(char,num_repetitions):
+def repeat_characters(char, num_repetitions):
     return char * num_repetitions
-
-
-# function to print paragraph from TEXTS
-def paragraphs_print(list_of_texts):
-    print('Please, select one of these paragraphs:')
-    print(repeat_char('=', 50))
-    print('1', list_of_texts[0])
-    print(repeat_char('-', 50))
-    print('2\n', list_of_texts[1])
-    print(repeat_char('-', 50))
-    print('3\n', list_of_texts[2])
-    print(repeat_char('=', 50))
 
 
 def ask_user_for_input(list_length):
@@ -108,25 +101,56 @@ def count_string_numeric(input_text):
     return number
 
 
-def bar_chart_word_len_frequency(input_text):
-    container = []
+def dictionary_length_frequency(input_text):
+    dictionary = {}
     text_split = input_text.split()
-    for index, word in enumerate(text_split):
+    for word in text_split:
         word = word.strip('.,?!')
-        length = len(word)
-        container.append(length)
-        return container
+        if len(word) in dictionary:
+            dictionary[len(word)] = dictionary[len(word)] + 1
+        else:
+            dictionary[len(word)] = 1
+    return dictionary
 
 
+def print_my_dictionary(my_dictionary):
+    # for key, value in my_dictionary.items():
+    #     print(key, (repeat_char('*', value)), value)
+    ordered_list = sorted(my_dictionary.items())
+    for my_tuple in ordered_list:
+        print(my_tuple[0], end=' ')
+        print(repeat_characters('*', my_tuple[1]), end=' ')
+        print(my_tuple[1])
+
+
+def total_sum_digits(input_text):
+    sum_digit = 0
+    for num in input_text.split():
+        if num.isdigit():
+            number = int(num)
+            sum_digit = sum_digit + number
+    return sum_digit
+
+
+# function to call the text analyser functions
 def text_process(list_of_texts):
     selected_paragraph = list_of_texts[ask_user_for_input(len(list_of_texts))]
+    print(repeat_characters('-', 70))
     print('Total number of words in selected paragraph is:', count_words(selected_paragraph))
-    print('Total words start with upper-case letter in selected paragraph is:', count_words_start_upper(selected_paragraph))
-    print('Total words contain upper-case letter in selected paragraph is:', count_words_contain_upper(selected_paragraph))
-    print('Total words start with lower-case letter in selected paragraph is:', count_words_starts_lower(selected_paragraph))
+    print('Total words start with upper-case letter in selected paragraph is:',
+          count_words_start_upper(selected_paragraph))
+    print('Total words contain upper-case letter in selected paragraph is:',
+          count_words_contain_upper(selected_paragraph))
+    print('Total words start with lower-case letter in selected paragraph is:',
+          count_words_starts_lower(selected_paragraph))
     print('Total numeric strings in selected paragraph is:', count_string_numeric(selected_paragraph))
-    print('To jsem zvedava co to vytiskne', bar_chart_word_len_frequency(selected_paragraph))
+    print(repeat_characters('-', 70))
+    print_my_dictionary(dictionary_length_frequency(selected_paragraph))
+    print(repeat_characters('-', 70))
+    print('Total sum of all numbers in selected paragraph:', total_sum_digits(selected_paragraph))
+    print(repeat_characters('-', 70))
 
+# function to run the entire text analyser app
 def run_project(list_of_texts):
     if is_user_registered():
         text_process(list_of_texts)
@@ -135,8 +159,3 @@ def run_project(list_of_texts):
 
 
 run_project(TEXTS)
-
-
-
-
-

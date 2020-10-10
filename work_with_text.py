@@ -87,8 +87,19 @@ def count_words_start_upper(input_text):
 
 
 def count_words_contain_upper(input_text):
-    upper = sum(1 for word in input_text if word.isupper())
-    return upper
+    total = 0
+    for word in input_text.split():
+        if contains_uppercase(word):
+            total = total + 1
+    return total
+
+
+# function return true in case the argument contains uppercase
+def contains_uppercase(word):
+    for char in word:
+        if char.isupper():
+            return True
+    return False
 
 
 def count_words_starts_lower(input_text):
@@ -105,7 +116,7 @@ def dictionary_length_frequency(input_text):
     dictionary = {}
     text_split = input_text.split()
     for word in text_split:
-        word = word.strip('.,?!')
+        word = word.strip('.,?!\'\"')
         if len(word) in dictionary:
             dictionary[len(word)] = dictionary[len(word)] + 1
         else:
